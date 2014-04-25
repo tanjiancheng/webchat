@@ -1,4 +1,4 @@
-php-chat
+webchat
 ========
 
-ajax长轮询聊天室
+使用ajax长轮询，php服务端的web聊天室
