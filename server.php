@@ -1,8 +1,8 @@
 <?php
 
 /**
- * 
- */
+ * 聊天服务器程序
+*/
 
 set_time_limit(0);
 $filename = dirname(__FILE__).'/data.txt';
@@ -25,9 +25,9 @@ while ($currentmodif <= $lastmodif) // check if the data file has been modified
 }
 
 $response = array(); 
-$response['msg'] = file_get_contents($filename); 
-$response['msg'].= $lastmodif ."|". $currentmodif;
+$response['msg'] = file_get_contents($filename);
 $response['timestamp'] = $currentmodif; 
+$response['time'] = date("Y-m-d H:i:s",$currentmodif); 
 echo json_encode($response); 
 flush();
 ?>

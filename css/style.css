@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+/*Reset 样式初始化*/
+
+body{
+    font-size: 12px;
+
+    font-family: simsun;
+}
+
+.clearfix:after{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clear{
+    clear: both;
+}
+
+body, ul{
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+ul, ol, li, h1 { 
+
+    line-height: normal; 
+
+    list-style-image: none; 
+
+    list-style-position: outside; 
+
+    list-style-type: none;
+
+}
+
+body.body-blue {
+    background:#ededed url("../images/body-bg.jpg") -100px -50px repeat;
+}
+#container {
+    width: 910px; 
+    height: 582px; 
+    margin: 0 auto;
+}
+
+#container #header {
+    height: 76px;
+    background:#C2D2C8;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#C2DCC8), to(#C2D2C8));
+    background-image: -webkit-linear-gradient(top, #C2DCC8, #C2D2C8);
+    background-image:    -moz-linear-gradient(top, #C2DCC8, #C2D2C8);
+    background-image:      -o-linear-gradient(top, #C2DCC8, #C2D2C8);
+    background-image:         linear-gradient(to bottom, #C2DCC8, #C2D2C8);
+}
+
+#container #chat-content {
+    height: 356px;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 15px;
+    outline:0;
+    background:#fff;
+}
+
+#container #input-section{
+    height: 78px;
+}
+
+#inputP {
+    height: 78px
+}
+#inputPL {
+    float: left;
+    width: 22px;
+    height: 78px;
+    background: url("../images/inputBg.png") no-repeat 0 0;
+}
+#inputPM {
+    float: left;
+    width: 538px;
+    height: 78px;
+   background: url("../images/inputBg.png") 0 -80px;
+}
+#inputPM textarea {
+    resize: none
+}
+#inputPR {
+    float: left;
+    width: 122px;
+    height: 78px;
+    background: url("../images/inputBg.png") 0 -161px;;
+    
+}
+#word{
+    margin: 16px 0 0;
+    height: 45px;
+    width: 100% ;
+    border: 0;
+    line-height: 22px;
+    font-size: 12px;
+    overflow: hidden;
+    color: #333;
+    padding: 0;
+    outline: 0;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+#send {
+    margin: 2px 0 0;
+    height: 20px;
+    text-align: right
+}
+.inputJimiBg {
+    margin: 5px 15px;
+    display: block;
+    line-height: 25px;
+    clear: both;
+    color: #243c09
+}
+#inputPR input {
+    margin: 20px 0 0 25px;
+    width: 80px;
+    height: 40px;
+    border: 0;
+    cursor: pointer
+}
+#inputPR input {
+    background: url("../images/sendBtn.png");
+} 
+#inputPR input:hover {
+    background: url("../images/sendBtn.png") 0 bottom;
+}
+
+.other .other-pic{
+   display: inline-block;
+    float: left;
+    zoom: 1;
+    width: 48px;
+    height: 75px;
+    background: url("../images/default.gif") no-repeat;
+    text-align: center;
+
+}
+.other img {
+    box-shadow: 2px 2px 5px #999999;
+}
+
+.other em {
+    display: block;
+    height: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-style: normal;
+    text-overflow:ellipsis;
+}   
+
+
+
+
+
+
+ 
