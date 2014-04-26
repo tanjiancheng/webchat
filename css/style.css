@@ -44,6 +44,18 @@ ul, ol, li, h1 {
 body.body-blue {
     background:#ededed url("../images/body-bg.jpg") -100px -50px repeat;
 }
+
+table {
+    border-collapse:collapse;
+    border-spacing: 0;
+}
+
+table.chat-table {
+    position:relative;
+    left:10px;
+    line-height: 25px;
+}
+
 #container {
     width: 910px; 
     height: 582px; 
@@ -151,6 +163,14 @@ body.body-blue {
 .other img {
     box-shadow: 2px 2px 5px #999999;
 }
+.other .other-chat-conent {
+    min-width:154px;
+    padding:10px;
+    border:1px solid #BBFFBB;
+    background:#E6F2D5;
+    border-radius:10px;
+}
+
 
 .other em {
     display: block;

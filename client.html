@@ -9,6 +9,7 @@
 
 		<link href="css/style.css" rel="stylesheet">
 		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/common.js"></script>
 
 		<script type="text/javascript">
 			var timestamp = 0; 
@@ -22,10 +23,17 @@
 					type : 'get', 
 					timeout : 0, 
 					success : function(response){ 
-					var data = eval('('+response+')'); 
-					error = false; 
-						timestamp = data.timestamp; 
-						$("#chat-content").append('<div>' + data.msg + '</div>'); 
+						var data = eval('('+response+')'); 
+						error = false; 
+						timestamp = data.timestamp;
+						var content = '';
+						var	other_templete = $("#other-content-templete").html();	//单个服内容模板
+						var other = [];
+						other['otherName'] =  '游客';
+						other['otherContent'] =  data.msg;
+						other['otherTime'] =  data.currentTime;
+						content = format(other_templete, other);	
+						$("#chat-content").append(content); 
 					}, 
 					error : function(){ 
 						error = true; 
@@ -68,12 +76,26 @@
 				<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.00</h1>
 			</div> 
 			<div id="chat-content">
-				<div class="other">
+				<!-- <div class="other">
 					<span class="other-pic">
 						<img src="images/other.gif" alt="">
 						<em>游客</em>
 					</span>
-				</div>
+					<table class="chat-table">
+						<tr>
+							<td>
+								<div class="other-chat-conent">
+									465465465465645
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								2014-04-26 17:24:43
+							</td>
+						</tr>
+					</table>
+				</div> -->
 			</div>
 			<div id="inputP">
 				<form action="" method="get" onsubmit="send($('#word').val());$('#word').val('');return false;"> 
@@ -86,13 +108,34 @@
 					</div>
 				</form>
 			</div>
-			<!-- <p> 
-				<form action="" method="get" onsubmit="send($('#word').val());$('#word').val('');return false;"> 
-					<input type="text" name="word" id="word" value="" /> 
-					<input type="submit" name="submit" value="Send" /> 
-				</form>
-			</p> -->
-		</div>   
+		</div>
+
+
+		<!-- 其他人聊天信息模板 -->
+		<div id="other-content-templete" style="display:none">
+			<div class="other">
+				<span class="other-pic">
+					<img src="images/other.gif" alt="">
+					<em>%otherName</em>
+				</span>
+				<table class="chat-table">
+					<tr>
+						<td>
+							<div class="other-chat-conent">
+								%otherContent
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							%otherTime
+						</td>
+					</tr>
+				</table>
+			</div> 
+		</div>
+		<!-- end -->
+		   
 		
 	</body>
 	

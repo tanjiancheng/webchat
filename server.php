@@ -27,7 +27,7 @@ while ($currentmodif <= $lastmodif) // check if the data file has been modified
 $response = array(); 
 $response['msg'] = file_get_contents($filename);
 $response['timestamp'] = $currentmodif; 
-$response['time'] = date("Y-m-d H:i:s",$currentmodif); 
+$response['currentTime'] = date("Y-m-d H:i:s",$currentmodif); 
 echo json_encode($response); 
 flush();
 ?>
