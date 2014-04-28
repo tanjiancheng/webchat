@@ -12,28 +12,50 @@
 		<script type="text/javascript" src="js/common.js"></script>
 
 		<script type="text/javascript">
-			var timestamp = 0; 
+			var timestamp = 0;
+			var name = '';
+			var ip = ''; 
 			var url = 'server.php'; 
 			var error = false;
 
 			function connect(){ 
 				$.ajax({ 
-					data : {'timestamp' : timestamp}, 
+					data : {
+						'timestamp' : timestamp,
+						'ip' : ip
+					}, 
 					url : url, 
 					type : 'get', 
 					timeout : 0, 
 					success : function(response){ 
-						var data = eval('('+response+')'); 
 						error = false; 
+						var data = eval('('+response+')'); 
 						timestamp = data.timestamp;
+						receive_ip = data.ip;
+						
 						var content = '';
-						var	other_templete = $("#other-content-templete").html();	//单个服内容模板
-						var other = [];
-						other['otherName'] =  '游客';
-						other['otherContent'] =  data.msg;
-						other['otherTime'] =  data.currentTime;
-						content = format(other_templete, other);	
-						$("#chat-content").append(content); 
+						var	templete = '';
+
+						if(ip == receive_ip) {
+							templete = $("#me-content-templete").html();
+						} else {
+							templete = $("#other-content-templete").html();	
+						}
+
+						if(ip == '') {
+							ip = data.ip;
+						}
+						
+						var user = [];
+						user['Name'] =  '游客';
+						user['Content'] =  data.msg;
+						user['Time'] =  data.currentTime;
+						content = format(templete, user);	
+						$("#chat-content").append(content);
+
+
+						$("#word").val("").focus();
+						scrollToBottom();			//div的滚动条始终在最下方
 					}, 
 					error : function(){ 
 						error = true; 
@@ -48,6 +70,12 @@
 					} 
 				}) 
 			}
+
+			 function scrollToBottom() {
+			    var scrollTop = $("#chat-content")[0].scrollHeight;
+			    $("#chat-content").scrollTop(scrollTop);
+			 }
+
 			function send(msg){
 				$.ajax({ 
 					data : {'msg' : msg}, 
@@ -76,12 +104,32 @@
 				<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.00</h1>
 			</div> 
 			<div id="chat-content">
-				<!-- <div class="other">
+				<!-- <div class="other clearfix">
 					<span class="other-pic">
 						<img src="images/other.gif" alt="">
 						<em>游客</em>
 					</span>
 					<table class="chat-table">
+						<tr>
+							<td>
+								<div class="other-chat-conent">
+									465465465465645
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								2014-04-26 17:24:43
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="other clearfix">
+					<span class="other-pic me-pic">
+						<img src="images/other.gif" alt="">
+						<em>游客</em>
+					</span>
+					<table class="chat-table me-table">
 						<tr>
 							<td>
 								<div class="other-chat-conent">
@@ -113,29 +161,53 @@
 
 		<!-- 其他人聊天信息模板 -->
 		<div id="other-content-templete" style="display:none">
-			<div class="other">
+			<div class="other clearfix">
 				<span class="other-pic">
 					<img src="images/other.gif" alt="">
-					<em>%otherName</em>
+					<em>%Name</em>
 				</span>
 				<table class="chat-table">
 					<tr>
 						<td>
 							<div class="other-chat-conent">
-								%otherContent
+								%Content
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							%otherTime
+							%Time
 						</td>
 					</tr>
 				</table>
 			</div> 
 		</div>
 		<!-- end -->
-		   
+
+		<!-- 自己聊天信息模板 -->
+		<div id="me-content-templete" style="display:none">
+			<div class="other clearfix">
+				<span class="other-pic me-pic">
+					<img src="images/other.gif" alt="">
+					<em>%Name</em>
+				</span>
+				<table class="chat-table me-table">
+					<tr>
+						<td>
+							<div class="other-chat-conent me-chat-conent">
+								%Content
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							%Time
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<!-- end --> 
 		
 	</body>
 	

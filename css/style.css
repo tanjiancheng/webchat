@@ -51,9 +51,12 @@ table {
 }
 
 table.chat-table {
+    max-width:800px;
     position:relative;
     left:10px;
     line-height: 25px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 #container {
@@ -73,7 +76,7 @@ table.chat-table {
 }
 
 #container #chat-content {
-    height: 356px;
+    height: 500px;
     overflow: auto;
     overflow-x: hidden;
     padding: 15px;
@@ -179,7 +182,19 @@ table.chat-table {
     white-space: nowrap;
     font-style: normal;
     text-overflow:ellipsis;
-}   
+} 
+
+.me-pic,.me-table {
+    float:right!important;
+}
+
+.me-table {
+    margin-right:20px;
+}
+.me-chat-conent {
+    border:1px solid #FFD2D2!important;
+    background:#F6ECE6!important;
+}  
 
 
 
