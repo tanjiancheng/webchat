@@ -7,7 +7,7 @@
 include("libs/Stroage.php");
 include("libs/Common.php");
 
-// set_time_limit(0);
+set_time_limit(0);
 
 $msg = isset($_GET['msg']) ? $_GET['msg'] : ''; 
 if ($msg != '') {
