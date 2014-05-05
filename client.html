@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 			var timestamp = 0;
 			var name = '';
-			var ip = '127.0.0.3'; 
+			var ip = ''; 
 			var url = 'server.php'; 
 			var error = false;
 
@@ -26,13 +26,12 @@
 					}, 
 					url : url, 
 					type : 'get', 
-					timeout : 0, 
-					success : function(response){ 
+					timeout : 0,
+					dataType : "json",
+					success : function(data){ 
 						error = false; 
-						var data = eval('('+response+')'); 
 						timestamp = data.timestamp;
 						receive_ip = data.ip;
-						console.log(receive_ip);
 						
 						var content = '';
 						var	templete = '';
@@ -46,6 +45,9 @@
 						if(ip == '') {
 							ip = data.ip;
 						}
+
+						//console.log(ip);
+						//console.log(receive_ip);
 						
 						var user = [];
 						user['Name'] =  '游客';
@@ -53,8 +55,6 @@
 						user['Time'] =  data.currentTime;
 						content = format(templete, user);	
 						$("#chat-content").append(content);
-
-
 						
 						scrollToBottom();			//div的滚动条始终在最下方
 					}, 
@@ -93,6 +93,7 @@
 	            var ev = document.all ? window.event : e;
 	            if(ev.keyCode==13) {
 	                $("#submit").trigger('click');
+	                return false;
 	            }
 	        } 
 
@@ -102,6 +103,7 @@
 				$("#submit").click(function() {
 					var msg = $('#word').val();
 					send(msg,ip);
+					console.log($("#word").val());
 					$("#word").val("").focus();
 					return false;
 				})
