@@ -13,6 +13,7 @@ $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
 if ($msg != '') {
 	Stroage::getInstance() -> set("msg", $msg);
 	Stroage::getInstance() -> set("time", time());
+	Stroage::getInstance() -> set("currentip", $_GET['ip']);
 	die(); 
 }
 
@@ -33,10 +34,12 @@ $response['msg'] = Stroage::getInstance() -> get("msg");		//聊天信息
 $response['timestamp'] = $currentmodif; 						//当前时间戳
 $response['currentTime'] = date("Y-m-d H:i:s",$currentmodif); 	//格式化后的时间
 
-if(isset($_GET['ip']) && $_GET['ip'] != '') {
-	$response['ip'] = $_GET['ip'];
-} else {
-	$response['ip'] = get_ClientIP(); 
+if(isset($_GET['ip']) && !empty($_GET['ip'])) {
+	$response['ip'] = Stroage::getInstance() -> get("currentip");
+
+} else { 
+	//$response['ip'] = '127.0.0.3';
+	$response['ip'] = get_ClientIP();
 }
 
 echo json_encode($response); 
