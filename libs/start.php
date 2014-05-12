@@ -17,7 +17,7 @@ class CallBack {
 	public function callBackFunc( $class, $arr_param= array() ) {
 
 		if(!isset($class)) {
-			@header("location:index.php?func="+INDEX);
+			return;
 		}
 		
 		list( $s_ClassName , $s_FuncName ) = explode( ".", $class );

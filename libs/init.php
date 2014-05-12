@@ -19,9 +19,11 @@ if(!defined('BASE')){
 	$baseUrl = dirname('http://'.$domain .":" . $_SERVER['SERVER_PORT'] . $_SERVER['SCRIPT_NAME']) ;
 	define("APP", $baseUrl);        //设置当前应用的目录
 
-	include('core.cls.php');
 
-	session_start();
+	include('core.cls.php');
+	include('Common.php');
+	include('Stroage.php');
+
 	@header( "Content-type: text/html; charset=utf-8" );
 
 	if (get_magic_quotes_gpc()) { 				//如果开了magic_quotes，就用程序关掉。

@@ -8,6 +8,7 @@
 	<meta name="keywords" content="">
 
 	<link href="css/login.css" rel="stylesheet">
+	
 	<link href="" rel="stylesheet">
 
 	<script type="text/javascript" src="js/jquery.js"></script>
@@ -44,6 +45,7 @@
 							<i class="icon-lock"></i>
 						</span>
 						<input type="password" placeholder="请输入你的密码" id="password">
+						<p class="tips" id="main_tip"></p>
 					</div>
 
 					<div class="box-input">
@@ -82,7 +84,7 @@
 					</div>
 
 					<div class="box-button center">
-						<button type="submit" class="btn login-btn" id="login">登录</button>
+						<button type="button" class="btn login-btn" id="login">登录</button>
 					</div>
 				</form>
 			</div>
@@ -105,17 +107,33 @@
 				var userName = $("#userName").val();
 				var password = $("#password").val();
 				var pic = $(".user-pic .current>img").attr("data-value");
-				alert(pic);return;
+
+				if(userName == '') {
+					$("#main_tip").text("昵称不能为空！");
+					return;
+				}
+
+				if(password == '') {
+					$("#main_tip").text("密码不能为空！");
+					return;
+				}
 
 				$.ajax({
 					type : "post",
-					url : "action/LoginAction.php",
+					url : "index.php?func=LoginAction.checkLogin",
 					data : {
-
+						'userName' : userName,
+						'password' : password,
+						'pic' : pic
 					},
 					dataType:"json",
 					success:function(responseText) {
-
+						if(responseText) {
+							window.location.href = "index.php?func=ClientAction.showClient";
+						} else {
+							$("#main_tip").text("密码错误！");
+							return;
+						}
 					}
 
 				})

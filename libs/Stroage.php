@@ -10,7 +10,6 @@ class Stroage {
 	static $_obj = null;
 
 	private function __construct() {
-
 	}
 
 	public static function getInstance() {

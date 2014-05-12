@@ -17,6 +17,7 @@ class FileDb  {
 
     public function get($key) {
     	$fileName = $this -> _dataCatalog . $key . '.txt';
+        
     	$contents = 0;
 
     	if(file_exists($fileName)) {

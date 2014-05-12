@@ -14,8 +14,8 @@
 		<script type="text/javascript">
 			var timestamp = 0;
 			var name = '';
-			var ip = ''; 
-			var url = 'server.php'; 
+			var ip = '<?php echo $ip; ?>'; 
+			var url = 'index.php?func=ServerAction.connect'; 
 			var error = false;
 
 			function connect(){ 
@@ -42,15 +42,11 @@
 							templete = $("#other-content-templete").html();	
 						}
 
-						if(ip == '') {
-							ip = data.ip;
-						}
-
 						//console.log(ip);
 						//console.log(receive_ip);
 						
 						var user = [];
-						user['Name'] =  '游客';
+						user['Name'] =  '<?php echo $userName?>';
 						user['Content'] =  data.msg;
 						user['Time'] =  data.currentTime;
 						content = format(templete, user);	
@@ -63,28 +59,34 @@
 						setTimeout(function(){ connect();}, 5000); 
 					}, 
 					complete : function(){ 
-					if (error) 
-						 // if a connection problem occurs, try to reconnect each 5 seconds 
-						 setTimeout(function(){connect();}, 5000); 
-					else 
-						connect(); 
+						if (error) {
+							 // if a connection problem occurs, try to reconnect each 5 seconds 
+							 setTimeout(function(){connect();}, 5000); 
+						} else {
+							connect(); 
+						} 
 					} 
-				}) 
+				})
 			}
 
-			 function scrollToBottom() {
-			    var scrollTop = $("#chat-content")[0].scrollHeight;
-			    $("#chat-content").scrollTop(scrollTop);
-			 }
+			function scrollToBottom() {
+			   var scrollTop = $("#chat-content")[0].scrollHeight;
+			   $("#chat-content").scrollTop(scrollTop);
+			}
 
 			function send(msg,ip){
-				$.ajax({ 
+				$.ajax({
+					url : 'index.php?func=SendAction.send',
 					data : {
 						'msg' : msg,
 						'ip' : ip
 					}, 
 					type : 'get', 
-					url : url 
+					dataType : "json",
+					success : function(data) {
+						
+					}
+
 				}) 
 			}
 
@@ -103,7 +105,7 @@
 				$("#submit").click(function() {
 					var msg = $('#word').val();
 					send(msg,ip);
-					console.log($("#word").val());
+					//console.log($("#word").val());
 					$("#word").val("").focus();
 					return false;
 				})
@@ -203,7 +205,7 @@
 		<div id="me-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic me-pic">
-					<img src="images/other.gif" alt="">
+					<img src="images/user/<?php echo $pic;?>" alt="">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table me-table">

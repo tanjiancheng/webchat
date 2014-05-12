@@ -283,6 +283,10 @@ div.center, p.center, img.center {
     clear: both;
 }
 
+.tips{
+    color:red;
+}
+
 /*头像区域*/
 .user-pic li {
   display:inline-block;
@@ -308,8 +312,6 @@ div.center, p.center, img.center {
     width:30px;
     height:30px;
 }
-
-
 /*头像区域*/
 
 

@@ -164,6 +164,8 @@ table.chat-table {
 
 }
 .other img {
+    width: 48px;
+    height:48px;
     box-shadow: 2px 2px 5px #999999;
 }
 .other .other-chat-conent {

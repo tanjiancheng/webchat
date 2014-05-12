@@ -21,10 +21,23 @@ class LoginAction {
 	 * 验证登录
 	 * @return 
 	 */
-	public function checkLogin() {
+	public function checkLogin($parame) {
+		session_start();
+		$userName = $parame['userName'];
+		$password = $parame['password'];
+		$pic = $parame['pic'];
 
+		$_SESSION['user'] = array(
+			'userName' => $userName,
+			'pic' => $pic
+		);
 
+		if($password == $this -> _password) {
+			echo json_encode(1);
+			exit;
+		}
 
+		echo json_encode(0);
 
 	}
 
