@@ -118,7 +118,7 @@
 	<body class="body-blue">
 		<div id="container">
 			<div id="header" style="position:relative;">
-				<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.00</h1>
+				<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.50</h1>
 			</div> 
 			<div id="chat-content">
 				<!-- <div class="other clearfix">

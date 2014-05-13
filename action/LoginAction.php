@@ -27,6 +27,10 @@ class LoginAction {
 		$password = $parame['password'];
 		$pic = $parame['pic'];
 
+		if(!isset($pic)) {
+			$pic = "default.gif";
+		}
+
 		$_SESSION['user'] = array(
 			'userName' => $userName,
 			'pic' => $pic

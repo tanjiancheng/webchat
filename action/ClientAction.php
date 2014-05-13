@@ -20,12 +20,10 @@ class ClientAction {
 			@header("location:index.php?func=LoginAction.showLoginIndex");
 		}
 
+
 		$userName = $_SESSION['user']['userName'];
 		$pic = $_SESSION['user']['pic'];
 		$ip = get_ClientIP();
-
-		unset($_SESSION);
-		session_destroy();
 
 		GameCore::display("client.php",array(
 			'userName' => $userName,

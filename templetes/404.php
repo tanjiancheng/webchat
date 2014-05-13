@@ -6,11 +6,12 @@
 		<title>404</title>
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
 		<style>
+			body {
+				font: normal 100% "Microsoft YaHei",SimHei,sans-serif;
+				color: #666;
+			}
 			.errorContainer {
 				padding-top:15px;
-				-webkit-box-shadow:  0px 0px 1px 1px rgba(0, 0, 0, 0.1);
-				-moz-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
-			    box-shadow:  0px 0px 1px 1px rgba(0, 0, 0, 0.1);
 			    width:100%;
 			}
 			.errorInfo {

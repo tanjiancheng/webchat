@@ -159,7 +159,7 @@ table.chat-table {
     zoom: 1;
     width: 48px;
     height: 75px;
-    background: url("../images/default.gif") no-repeat;
+    /* background: url("../images/default.gif") no-repeat; */
     text-align: center;
 
 }
