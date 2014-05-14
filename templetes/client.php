@@ -13,7 +13,7 @@
 
 		<script type="text/javascript">
 			var timestamp = 0;
-			var name = '';
+			var userName = '<?php echo $userName?>';
 			var ip = '<?php echo $ip; ?>';
 			var url = 'index.php?func=ServerAction.connect'; 
 			var pic = '<?php echo $pic; ?>';
@@ -38,20 +38,25 @@
 						var content = '';
 						var	templete = '';
 
+						var picture = "images/user/default.gif";
 						if(ip == receive_ip) {
+							picture =  "images/user/"+pic;
+							$("#me-picture").attr("src", picture);
 							templete = $("#me-content-templete").html();
 						} else {
+							picture =  "images/user/"+data.pic;
+							$("#other-picture").attr("src", picture);
 							templete = $("#other-content-templete").html();	
 						}
-						console.log('in');
+
 						console.log(ip);
 						console.log(receive_ip);
 						
 						var user = [];
-						user['Name'] =  '<?php echo $userName?>';
+						user['Name'] =  data.userName;
 						user['Content'] =  data.msg;
 						user['Time'] =  data.currentTime;
-						user['Picture'] =  "images/user/"+data.pic;
+						
 						content = format(templete, user);	
 						$("#chat-content").append(content);
 						
@@ -83,7 +88,8 @@
 					data : {
 						'msg' : msg,
 						'ip' : ip,
-						'pic' : pic
+						'pic' : pic,
+						'userName' : userName
 					}, 
 					type : 'get', 
 					dataType : "json",
@@ -184,7 +190,7 @@
 		<div id="other-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic">
-					<img src="%Picture" alt="">
+					<img src="" alt="" id="other-picture">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table">
@@ -209,7 +215,7 @@
 		<div id="me-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic me-pic">
-					<img src="%Picture" alt="">
+					<img src="" alt="" id="me-picture">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table me-table">

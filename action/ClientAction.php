@@ -24,6 +24,7 @@ class ClientAction {
 		$userName = $_SESSION['user']['userName'];
 		$pic = $_SESSION['user']['pic'];
 		$ip = get_ClientIP();
+		//$ip = "127.0.0.3";
 
 		if(!$pic) {
 			$pic = "default.gif";

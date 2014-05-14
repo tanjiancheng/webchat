@@ -42,7 +42,8 @@ class ServerAction {
 		$response['timestamp'] = $currentmodif; 						//当前时间戳
 		$response['currentTime'] = date("Y-m-d H:i:s",$currentmodif); 	//格式化后的时间
 		$response['ip'] = Stroage::getInstance() -> get("currentip");	//当前发送用户ip
-		$response['pic'] = Stroage::getInstance() -> get("pic");	//当前发送用户头像
+		$response['pic'] = Stroage::getInstance() -> get("pic");	    //当前发送用户头像
+		$response['userName'] = Stroage::getInstance() -> get("userName");	    //当前发送用户名称
 		if(empty($response['pic'])) {
 			$response['pic'] = "default.gif";
 		}
