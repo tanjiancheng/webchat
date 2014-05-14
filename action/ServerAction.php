@@ -41,7 +41,11 @@ class ServerAction {
 		$response['msg'] = Stroage::getInstance() -> get("msg");		//聊天信息
 		$response['timestamp'] = $currentmodif; 						//当前时间戳
 		$response['currentTime'] = date("Y-m-d H:i:s",$currentmodif); 	//格式化后的时间
-		$response['ip'] = Stroage::getInstance() -> get("currentip");
+		$response['ip'] = Stroage::getInstance() -> get("currentip");	//当前发送用户ip
+		$response['pic'] = Stroage::getInstance() -> get("pic");	//当前发送用户头像
+		if(empty($response['pic'])) {
+			$response['pic'] = "default.gif";
+		}
 
 		echo json_encode($response); 
 		flush();

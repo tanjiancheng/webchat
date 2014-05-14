@@ -19,6 +19,7 @@ class SendAction {
 		Stroage::getInstance() -> set("msg", $msg);
 		Stroage::getInstance() -> set("time", time());
 		Stroage::getInstance() -> set("currentip", $parame['ip']);
+		Stroage::getInstance() -> set("pic", $parame['pic']);
 		die();
 	}
 

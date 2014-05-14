@@ -55,6 +55,10 @@ unset( $_POST );
 unset( $arr_GET );
 unset( $arr_POST );
 
+if(!$s_Func) {
+	$s_Func = INDEX;
+} 
+
 
 $calls = new CallBack();
 $calls -> callBackFunc( $s_Func, $arr_Param  );

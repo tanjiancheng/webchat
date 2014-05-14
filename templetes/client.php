@@ -14,8 +14,9 @@
 		<script type="text/javascript">
 			var timestamp = 0;
 			var name = '';
-			var ip = '<?php echo $ip; ?>'; 
+			var ip = '<?php echo $ip; ?>';
 			var url = 'index.php?func=ServerAction.connect'; 
+			var pic = '<?php echo $pic; ?>';
 			var error = false;
 
 			function connect(){ 
@@ -28,7 +29,8 @@
 					type : 'get', 
 					timeout : 0,
 					dataType : "json",
-					success : function(data){ 
+					success : function(data){
+						console.log(data);
 						error = false; 
 						timestamp = data.timestamp;
 						receive_ip = data.ip;
@@ -41,14 +43,15 @@
 						} else {
 							templete = $("#other-content-templete").html();	
 						}
-
-						//console.log(ip);
-						//console.log(receive_ip);
+						console.log('in');
+						console.log(ip);
+						console.log(receive_ip);
 						
 						var user = [];
 						user['Name'] =  '<?php echo $userName?>';
 						user['Content'] =  data.msg;
 						user['Time'] =  data.currentTime;
+						user['Picture'] =  "images/user/"+data.pic;
 						content = format(templete, user);	
 						$("#chat-content").append(content);
 						
@@ -79,7 +82,8 @@
 					url : 'index.php?func=SendAction.send',
 					data : {
 						'msg' : msg,
-						'ip' : ip
+						'ip' : ip,
+						'pic' : pic
 					}, 
 					type : 'get', 
 					dataType : "json",
@@ -180,7 +184,7 @@
 		<div id="other-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic">
-					<img src="images/other.gif" alt="">
+					<img src="%Picture" alt="">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table">
@@ -205,7 +209,7 @@
 		<div id="me-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic me-pic">
-					<img src="images/user/<?php echo $pic;?>" alt="">
+					<img src="%Picture" alt="">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table me-table">

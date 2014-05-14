@@ -25,6 +25,11 @@ class ClientAction {
 		$pic = $_SESSION['user']['pic'];
 		$ip = get_ClientIP();
 
+		if(!$pic) {
+			$pic = "default.gif";
+		}
+
+
 		GameCore::display("client.php",array(
 			'userName' => $userName,
 			'pic' => $pic,
