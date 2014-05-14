@@ -60,9 +60,10 @@ table.chat-table {
 }
 
 #container {
-    width: 910px; 
-    height: 582px; 
+    width:1015px;
+    height: auto; 
     margin: 0 auto;
+    text-align:center;
 }
 
 #container #header {
@@ -163,7 +164,7 @@ table.chat-table {
     text-align: center;
 
 }
-.other img {
+.img {
     width: 48px;
     height:48px;
     box-shadow: 2px 2px 5px #999999;
@@ -196,7 +197,52 @@ table.chat-table {
 .me-chat-conent {
     border:1px solid #FFD2D2!important;
     background:#F6ECE6!important;
-}  
+}
+
+#panelL {
+    float:left;
+    width:910px;
+    height:582px;
+}
+
+#panelR {
+    border-radius : 5px;
+    float:left;
+}
+
+.sidebar {
+    margin-top:51px;
+    display:inline-block;
+    width:100px;
+}
+
+.sidebar > .sidebar-header {
+    background:#48D1CC;
+    padding:5px;
+    text-align:center;
+}
+
+.sidebar > .sidebar-content {
+    padding:8px;
+    background:#B0E2E4;
+    min-height:310px;
+}
+
+.sidebar > .sidebar-content > div {
+    cursor:pointer;
+    display:inline-block;
+    background:#ffffff;
+    width:48px;
+    margin-bottom:8px;
+}
+
+.sidebar > .sidebar-content > div > div {
+    background:#000;
+    margin-top:-4px;
+    color:#fff;
+    padding-top:4px;
+    overflow:hidden;
+}
 
 
 

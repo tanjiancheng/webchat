@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>聊天室</title>
+		<title>小成成聊天室</title>
 		<meta name="description" content="">
 		<meta name="keywords" content="">
 
@@ -126,63 +126,81 @@
 	</head>
 
 	<body class="body-blue">
+		
 		<div id="container">
-			<div id="header" style="position:relative;">
-				<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.50</h1>
-			</div> 
-			<div id="chat-content">
-				<!-- <div class="other clearfix">
-					<span class="other-pic">
-						<img src="images/other.gif" alt="">
-						<em>游客</em>
-					</span>
-					<table class="chat-table">
-						<tr>
-							<td>
-								<div class="other-chat-conent">
-									465465465465645
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								2014-04-26 17:24:43
-							</td>
-						</tr>
-					</table>
+			<div id="panelL">
+				<div id="header" style="position:relative;">
+					<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.50</h1>
+				</div> 
+				<div id="chat-content">
+					<!-- <div class="other clearfix">
+						<span class="other-pic">
+							<img src="images/other.gif" alt="">
+							<em>游客</em>
+						</span>
+						<table class="chat-table">
+							<tr>
+								<td>
+									<div class="other-chat-conent">
+										465465465465645
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									2014-04-26 17:24:43
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="other clearfix">
+						<span class="other-pic me-pic">
+							<img src="images/other.gif" alt="">
+							<em>游客</em>
+						</span>
+						<table class="chat-table me-table">
+							<tr>
+								<td>
+									<div class="other-chat-conent">
+										465465465465645
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									2014-04-26 17:24:43
+								</td>
+							</tr>
+						</table>
+					</div> -->
 				</div>
-				<div class="other clearfix">
-					<span class="other-pic me-pic">
-						<img src="images/other.gif" alt="">
-						<em>游客</em>
-					</span>
-					<table class="chat-table me-table">
-						<tr>
-							<td>
-								<div class="other-chat-conent">
-									465465465465645
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								2014-04-26 17:24:43
-							</td>
-						</tr>
-					</table>
-				</div> -->
+				<div id="inputP">
+					<form action="" method="get" onsubmit="return false;"> 
+						<div id="inputPL" class="fixPng"></div>
+						<div id="inputPM" style="width: 766px;">
+							<textarea rows="" cols="" id="word" name="word"></textarea>
+						</div>
+						<div id="inputPR" class="fixPng">
+							<input type="submit" name="submit" id="submit" value="">
+						</div>
+					</form>
+				</div>
 			</div>
-			<div id="inputP">
-				<form action="" method="get" onsubmit="return false;"> 
-					<div id="inputPL" class="fixPng"></div>
-					<div id="inputPM" style="width: 766px;">
-						<textarea rows="" cols="" id="word" name="word"></textarea>
+
+			<div id="panelR" class="sidebar">
+				<div class="sidebar-header">在线用户</div>
+				<div class="sidebar-content">
+					<div>
+						<img src="images/user/user1.gif" class="img">
+						<div>小成成</div>
 					</div>
-					<div id="inputPR" class="fixPng">
-						<input type="submit" name="submit" id="submit" value="">
+					<div>
+						<img src="images/user/user1.gif" class="img">
+						<div>小成成</div>
 					</div>
-				</form>
+				</div>
 			</div>
+
 		</div>
 
 
@@ -190,7 +208,7 @@
 		<div id="other-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic">
-					<img src="" alt="" id="other-picture">
+					<img src="" alt="" id="other-picture" class="img">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table">
@@ -215,7 +233,7 @@
 		<div id="me-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic me-pic">
-					<img src="" alt="" id="me-picture">
+					<img src="" alt="" id="me-picture" class="img">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table me-table">
