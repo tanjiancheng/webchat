@@ -16,6 +16,7 @@ class ClientAction {
 
 	public function showClient() {
 		session_start();
+
 		if(!isset($_SESSION['user'])) {
 			@header("location:index.php?func=LoginAction.showLoginIndex");
 		}
@@ -23,18 +24,20 @@ class ClientAction {
 
 		$userName = $_SESSION['user']['userName'];
 		$pic = $_SESSION['user']['pic'];
-		$ip = get_ClientIP();
+		$ip = $_SESSION['user']['ip'];
 		//$ip = "127.0.0.3";
 
 		if(!$pic) {
 			$pic = "default.gif";
 		}
 
+		$online = getOnlineList();
 
 		GameCore::display("client.php",array(
 			'userName' => $userName,
 			'pic' => $pic,
-			'ip' => $ip
+			'ip' => $ip,
+			'online' => $online
 		));
 
 

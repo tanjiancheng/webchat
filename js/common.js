@@ -20,3 +20,4 @@ function format(str,object) {
 	}
 	return str;
 }
+

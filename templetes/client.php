@@ -15,22 +15,26 @@
 			var timestamp = 0;
 			var userName = '<?php echo $userName?>';
 			var ip = '<?php echo $ip; ?>';
-			var url = 'index.php?func=ServerAction.connect'; 
 			var pic = '<?php echo $pic; ?>';
 			var error = false;
+
+			//在线人数信息
+			var onlineTimestamp = 0;
+			var onlineError = false;
 
 			function connect(){ 
 				$.ajax({ 
 					data : {
 						'timestamp' : timestamp,
-						'ip' : ip
+						'ip' : ip,
+						'userName' : userName
 					}, 
-					url : url, 
+					url : 'index.php?func=ServerAction.connect', 
 					type : 'get', 
 					timeout : 0,
 					dataType : "json",
 					success : function(data){
-						console.log(data);
+						//console.log(data);
 						error = false; 
 						timestamp = data.timestamp;
 						receive_ip = data.ip;
@@ -39,18 +43,17 @@
 						var	templete = '';
 
 						var picture = "images/user/default.gif";
-						if(ip == receive_ip) {
+						//ip == receive_ip ||
+						if( userName == data.userName) { 	 //我自己
 							picture =  "images/user/"+pic;
 							$("#me-picture").attr("src", picture);
 							templete = $("#me-content-templete").html();
-						} else {
+						} else {				 //其他人
 							picture =  "images/user/"+data.pic;
 							$("#other-picture").attr("src", picture);
 							templete = $("#other-content-templete").html();	
 						}
 
-						console.log(ip);
-						console.log(receive_ip);
 						
 						var user = [];
 						user['Name'] =  data.userName;
@@ -77,6 +80,40 @@
 				})
 			}
 
+			function onlineConnect() {
+				$.ajax({ 
+					data : {
+						'timestamp' : onlineTimestamp,
+					}, 
+					url : "index.php?func=OnlineAction.connect", 
+					type : 'get', 
+					timeout : 0,
+					dataType : "json",
+					success : function(responseText){
+
+						if(responseText != null) {
+							onlineTimestamp = responseText.timestamp;
+							drawOnline(responseText.online);
+						}
+						
+					}, 
+					error : function(){ 
+						onlineError = true; 
+						setTimeout(function(){ onlineConnect();}, 5000); 
+					}, 
+					complete : function(){ 
+						if (onlineError) {
+							 // if a connection problem occurs, try to reconnect each 5 seconds 
+							 setTimeout(function(){onlineConnect();}, 5000); 
+						} else {
+							onlineConnect(); 
+						} 
+					} 
+				})
+			}
+
+
+
 			function scrollToBottom() {
 			   var scrollTop = $("#chat-content")[0].scrollHeight;
 			   $("#chat-content").scrollTop(scrollTop);
@@ -96,8 +133,54 @@
 					success : function(data) {
 						
 					}
-
 				}) 
+			}
+
+			function drawOnline(data) {
+				var onlineHtml = '';
+				if(data != null) {
+					for(var i  in data) {
+						var user = data[i];
+						onlineHtml += "<div>";
+						onlineHtml += '<img src="images/user/'+ user["pic"]+'" class="img">';
+						onlineHtml += "<div>"+user["userName"]+"</div>";
+						onlineHtml += "</div>";
+					}	
+				}
+					
+				$("#online").html(onlineHtml);
+			}
+
+			var isClose = true;
+			function logout(){
+		        $.ajax({
+					url : 'index.php?func=OnlineAction.deleteOnlineUser',
+					data : {
+						'ip' : ip,
+						'userName' : userName
+					},
+					async : false,
+					type : 'get', 
+					dataType : "json"
+				})
+			}
+
+			$(window).on('beforeunload', function() {
+				if(isClose) {
+					logout();
+				}
+			});
+
+
+			function checkFirstVisit() {
+				var is_reloaded = sessionStorage.getItem("is_reloaded");
+				if(is_reloaded) {
+					isClose = false;
+					alert('Reloaded!')
+				} else {
+					sessionStorage.setItem("is_reloaded", true);
+				}
+			 
 			}
 
 
@@ -106,11 +189,21 @@
 	            if(ev.keyCode==13) {
 	                $("#submit").trigger('click');
 	                return false;
+	            } else if(ev.keyCode==116) {
+	            	ev.keyCode=0;
+	            	ev.cancelBubble = true;   
+	            	ev.returnValue = false;
 	            }
-	        } 
+
+	        }
+
+	        document.oncontextmenu = function() {
+	        	return false;
+	        }
 
 			$(document).ready(function(){ 
-				connect();
+				connect();			
+				onlineConnect();
 
 				$("#submit").click(function() {
 					var msg = $('#word').val();
@@ -125,7 +218,7 @@
 
 	</head>
 
-	<body class="body-blue">
+	<body class="body-blue" onload="checkFirstVisit()">
 		
 		<div id="container">
 			<div id="panelL">
@@ -189,15 +282,21 @@
 
 			<div id="panelR" class="sidebar">
 				<div class="sidebar-header">在线用户</div>
-				<div class="sidebar-content">
-					<div>
+				<div class="sidebar-content" id="online">
+					<?php foreach($online as $user): ?>
+						<div>
+							<img src="images/user/<?php echo $user['pic']; ?>" class="img">
+							<div><?php echo $user['userName']?></div>
+						</div>
+					<?php endforeach; ?>
+					<!-- <div>
 						<img src="images/user/user1.gif" class="img">
 						<div>小成成</div>
 					</div>
 					<div>
 						<img src="images/user/user1.gif" class="img">
 						<div>小成成</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 

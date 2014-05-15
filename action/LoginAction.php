@@ -26,6 +26,7 @@ class LoginAction {
 		$userName = $parame['userName'];
 		$password = $parame['password'];
 		$pic = $parame['pic'];
+		$ip = get_ClientIP();
 
 		if(!isset($pic)) {
 			$pic = "default.gif";
@@ -33,10 +34,17 @@ class LoginAction {
 
 		$_SESSION['user'] = array(
 			'userName' => $userName,
-			'pic' => $pic
+			'pic' => $pic,
+			'ip' => $ip
 		);
 
-		if($password == $this -> _password) {
+		if($password == $this -> _password) {	//登录成功
+			$arr = array(
+				'userName' => $userName,
+				'pic' => $pic,
+				'ip' => $ip
+			); 
+			updateOnlineList($arr);
 			echo json_encode(1);
 			exit;
 		}
@@ -48,7 +56,5 @@ class LoginAction {
 	public function showLoginIndex() {
 		GameCore::display("login.php");
 	}
-
-
 
 }

@@ -22,6 +22,7 @@ class ServerAction {
 
 	public function connect($parame = array()) {
 		set_time_limit(0);
+    	session_write_close();
 
 		$lastmodif = isset($parame['timestamp']) ? (int)$parame['timestamp'] : 0; 
 
@@ -33,8 +34,13 @@ class ServerAction {
 
 		while ($currentmodif <= $lastmodif) // check if the data file has been modified 
 		{ 
-			usleep(10000); 					// sleep 10ms to unload the CPU 
+			usleep(100000); 					// sleep 100ms to unload the CPU 
 			$currentmodif = Stroage::getInstance() -> get("time");
+
+			if (connection_aborted() == 1) {
+				deleteOnlineUser("ctam", "::1");
+				break;
+			}
 		}
 
 		$response = array();

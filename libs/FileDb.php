@@ -20,7 +20,7 @@ class FileDb  {
         
     	$contents = 0;
 
-    	if(file_exists($fileName)) {
+    	if(file_exists($fileName) && filesize($fileName) > 0) {
     		$handle = fopen($fileName, "r");
     		$contents = fread($handle, filesize($fileName));
     	} 

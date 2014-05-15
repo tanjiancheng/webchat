@@ -21,8 +21,8 @@ if(!defined('BASE')){
 
 
 	include('core.cls.php');
-	include('Common.php');
 	include('Stroage.php');
+	include('Common.php');
 
 	@header( "Content-type: text/html; charset=utf-8" );
 
