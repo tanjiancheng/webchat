@@ -53,12 +53,12 @@ class MultiFileOperate  {
         } else {            //文件存在，判定是否有锁定
             
             if ($f = fopen ( $oldFileName, 'w+' )) {
-                $startTime = microtime ();
+
                 do {
                     $canWrite = flock ( $f, LOCK_EX | LOCK_NB);
                     if (! $canWrite)
                         usleep ( round ( rand ( 0, 100 ) * 1000 ) );
-                } while ( (! $canWrite) && ((microtime () - $startTime) < 100000) );
+                } while ( (! $canWrite) );
 
                 if ($canWrite) {
                     $contents = file_get_contents($tempFilename);

@@ -32,11 +32,16 @@ class ServerAction {
 			$currentmodif = time();
 		}
 
+		$startTime = time();
 		while ($currentmodif <= $lastmodif) // check if the data file has been modified 
 		{ 
-			usleep(100000); 					// sleep 100ms to unload the CPU 
+			usleep(10000);					// sleep 10ms to unload the CPU 
 			$currentmodif = Stroage::getInstance() -> get("time");
-
+			if(time() - $startTime > 10) {
+				echo json_encode(null); 
+				flush();
+				exit;
+			}
 		}
 
 		$response = array();

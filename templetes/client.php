@@ -23,93 +23,105 @@
 			var onlineError = false;
 
 			function connect(){ 
-				$.ajax({ 
-					data : {
-						'timestamp' : timestamp,
-						'ip' : ip,
-						'userName' : userName
-					}, 
-					url : 'index.php?func=ServerAction.connect', 
-					type : 'get', 
-					timeout : 0,
-					dataType : "json",
-					success : function(data){
-						//console.log(data);
-						error = false; 
-						timestamp = data.timestamp;
-						receive_ip = data.ip;
-						
-						var content = '';
-						var	templete = '';
+				try {
+					$.ajax({ 
+						data : {
+							'timestamp' : timestamp,
+							'ip' : ip,
+							'userName' : userName
+						}, 
+						url : 'index.php?func=ServerAction.connect', 
+						type : 'get', 
+						timeout : 0,
+						dataType : "json",
+						success : function(data){
+							//console.log(data);
+							if(data != null) {
+								error = false; 
+								timestamp = data.timestamp;
+								receive_ip = data.ip;
+								
+								var content = '';
+								var	templete = '';
 
-						var picture = "images/user/default.gif";
-						//ip == receive_ip ||
-						if( userName == data.userName) { 	 //我自己
-							picture =  "images/user/"+pic;
-							$("#me-content-templete .me-picture").attr("src", picture);
-							templete = $("#me-content-templete").html();
-						} else {				 //其他人
-							picture =  "images/user/"+data.pic;
-							$("#other-content-templete .other-picture").attr("src", picture);
-							templete = $("#other-content-templete").html();	
-						}
+								var picture = "images/user/default.gif";
+								//ip == receive_ip ||
+								if( userName == data.userName) { 	 //我自己
+									picture =  "images/user/"+pic;
+									$("#me-content-templete .me-picture").attr("src", picture);
+									templete = $("#me-content-templete").html();
+								} else {				 //其他人
+									picture =  "images/user/"+data.pic;
+									$("#other-content-templete .other-picture").attr("src", picture);
+									templete = $("#other-content-templete").html();	
+								}
 
-						
-						var user = [];
-						user['Name'] =  data.userName;
-						user['Content'] =  data.msg;
-						user['Time'] =  data.currentTime;
-						
-						content = format(templete, user);	
-						$("#chat-content").append(content);
-						
-						scrollToBottom();			//div的滚动条始终在最下方
-					}, 
-					error : function(){ 
-						error = true; 
-						setTimeout(function(){ connect();}, 5000); 
-					}, 
-					complete : function(){ 
-						if (error) {
-							 // if a connection problem occurs, try to reconnect each 5 seconds 
-							 setTimeout(function(){connect();}, 5000); 
-						} else {
-							connect(); 
+								
+								var user = [];
+								user['Name'] =  data.userName;
+								user['Content'] =  data.msg;
+								user['Time'] =  data.currentTime;
+								
+								content = format(templete, user);	
+								$("#chat-content").append(content);
+								
+								scrollToBottom();			//div的滚动条始终在最下方
+							}
+						}, 
+						error : function(){ 
+							error = true; 
+							setTimeout(function(){ connect();}, 5000); 
+						}, 
+						complete : function(){ 
+							if (error) {
+								 // if a connection problem occurs, try to reconnect each 5 seconds 
+								 setTimeout(function(){connect();}, 5000); 
+							} else {
+								connect(); 
+							} 
 						} 
-					} 
-				})
+					})
+				} catch(e) {
+					connect(); 
+				}
+				
 			}
 
 			function onlineConnect() {
-				$.ajax({ 
-					data : {
-						'timestamp' : onlineTimestamp,
-					}, 
-					url : "index.php?func=OnlineAction.connect", 
-					type : 'get', 
-					timeout : 0,
-					dataType : "json",
-					success : function(responseText){
+				try {
+					$.ajax({ 
+						data : {
+							'timestamp' : onlineTimestamp,
+						}, 
+						url : "index.php?func=OnlineAction.connect", 
+						type : 'get', 
+						timeout : 0,
+						dataType : "json",
+						success : function(responseText){
 
-						if(responseText != null) {
-							onlineTimestamp = responseText.timestamp;
-							drawOnline(responseText.online);
-						}
-						
-					}, 
-					error : function(){ 
-						onlineError = true; 
-						setTimeout(function(){ onlineConnect();}, 5000); 
-					}, 
-					complete : function(){ 
-						if (onlineError) {
-							 // if a connection problem occurs, try to reconnect each 5 seconds 
-							 setTimeout(function(){onlineConnect();}, 5000); 
-						} else {
-							onlineConnect(); 
+							if(responseText != null) {
+								onlineTimestamp = responseText.timestamp;
+								drawOnline(responseText.online);
+							}
+							
+						}, 
+						error : function(){ 
+							onlineError = true; 
+							setTimeout(function(){ onlineConnect();}, 5000); 
+						}, 
+						complete : function(){ 
+							if (onlineError) {
+								 // if a connection problem occurs, try to reconnect each 5 seconds 
+								 setTimeout(function(){onlineConnect();}, 5000); 
+							} else {
+								onlineConnect(); 
+							} 
 						} 
-					} 
-				})
+					})
+
+				}catch(e) {
+					onlineConnect();
+				}	
 			}
 
 
