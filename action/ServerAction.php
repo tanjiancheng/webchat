@@ -47,7 +47,7 @@ class ServerAction {
 		$response = array();
 
 		if(!$isExpire) {
-		
+			$lastmodif == 0 ? $response['isFirst'] = true : $response['isFirst'] = false; 
 			$response['msg'] = Stroage::getInstance() -> get("msg");		//聊天信息
 			$response['timestamp'] = $currentmodif; 						//当前时间戳
 			$response['currentTime'] = date("Y-m-d H:i:s",$currentmodif); 	//格式化后的时间

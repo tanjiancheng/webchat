@@ -63,8 +63,11 @@
 								user['Content'] =  data.msg;
 								user['Time'] =  data.currentTime;
 								
-								content = format(templete, user);	
+								content = format(templete, user);
+
+								//if(!data.isFirst) {
 								$("#chat-content").append(content);
+								//}	
 								
 								scrollToBottom();			//div的滚动条始终在最下方
 							}
