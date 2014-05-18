@@ -80,6 +80,16 @@
 									<img src="images/user/user6.gif" alt="" data-value="user6.gif" >
 								</a>
 							</li>
+							<li class="DD" style="display:none">
+								<a href="javascript:;" >
+									<img src="images/user/user11.gif" alt="" data-value="user11.gif" >
+								</a>
+							</li>
+							<li class="DD" style="display:none">
+								<a href="javascript:;" >
+									<img src="images/user/user12.gif" alt="" data-value="user12.gif" >
+								</a>
+							</li>
 						</ul>
 					</div>
 
@@ -100,6 +110,14 @@
 				$(".user-pic li > a").removeClass("current");
 				$(this).addClass("current");
 
+			})
+
+			$("#userName").blur(function() {
+			
+				if($("#userName").val().indexOf("DD") != -1 ||$("#userName").val().indexOf("dd") != -1 ) {
+					$(".DD").show(200);
+				}
+				
 			})
 
 

@@ -28,7 +28,8 @@
 						data : {
 							'timestamp' : timestamp,
 							'ip' : ip,
-							'userName' : userName
+							'userName' : userName,
+							'pic' : pic
 						}, 
 						url : 'index.php?func=ServerAction.connect', 
 						type : 'get', 
@@ -232,7 +233,7 @@
 			$(document).ready(function(){ 
 				connect();			
 				onlineConnect();
-				keepOnline();
+				//keepOnline();
 
 				$("#submit").click(function() {
 					var msg = $('#word').val();
@@ -318,14 +319,6 @@
 							<div><?php echo $user['userName']?></div>
 						</div>
 					<?php endforeach; ?>
-					<!-- <div>
-						<img src="images/user/user1.gif" class="img">
-						<div>小成成</div>
-					</div>
-					<div>
-						<img src="images/user/user1.gif" class="img">
-						<div>小成成</div>
-					</div> -->
 				</div>
 			</div>
 
