@@ -6,6 +6,8 @@
  * @version 1.00
  */
 
+include("MultiFileOperate.php");
+
 class FileDb  {
     
     private $_dataCatalog = "data";     //数据保存目录
@@ -31,13 +33,13 @@ class FileDb  {
 
     public function set($key, $value) {
     	$fileName = $this -> _dataCatalog . $key . '.txt';
-    	$handle = fopen($fileName, "w+");
+    	$handle = MultiFileOperate::cfopen($fileName, "w+");
 
     	if($handle) {
-    		fwrite($handle, $value);
+            MultiFileOperate::cfwrite ( $handle, $value);
     	}
 
-    	fclose($handle);
+    	MultiFileOperate::cfclose ( $handle);
 
     }
 

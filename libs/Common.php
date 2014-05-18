@@ -28,9 +28,10 @@ function get_ClientIP()
 /**
  * 更新在线列表
  * @param  array  $parame 关于在线用户信息的数组                
+ * @param  push  true推送，false不推送，默认为true              
  * @return 
  */
-function updateOnlineList($parame = array()) {
+function updateOnlineList($parame = array(),$push = true) {
     ini_set("auto_detect_line_endings", true);
 
     if(!$parame['userName'] || !$parame['pic'] || !$parame['ip'] ) {
@@ -57,7 +58,7 @@ function updateOnlineList($parame = array()) {
     $userName = $parame['userName'];
     $pic = $parame['pic'];
     $ip = $parame['ip'];
-    $expire = time()+600;  //默认10分钟没有回复就当下线
+    $expire = time()+EXPIRE;  //默认15秒没有回复就当下线
 
     $data[] = array(
         'userName' => $userName,
@@ -93,7 +94,10 @@ function updateOnlineList($parame = array()) {
         Stroage::getInstance() -> set("online", $newOnlineList);
 
         //改变在线列表记录时间，推送出去
-        pushOnline();
+        if($push) {
+            pushOnline();
+        }
+        
     }
     
 }
@@ -119,7 +123,12 @@ function getOnlineList() {
         $tempArr = explode("\r\n", $online);
         foreach($tempArr as $val) {
             if(!empty($val)) {
-                $result[] = json_decode($val,true);
+                $user = json_decode($val,true); 
+                if(time() - $user['expire'] < EXPIRE) {
+                    $result[] = $user;
+                } else {
+                    deleteOnlineUser($user['userName'], $user['ip']);
+                }
             }
         }
 
@@ -132,7 +141,7 @@ function getOnlineList() {
  * 根据用户名和ip地址删除在线用户
  * @return [type] [description]
  */
-function deleteOnlineUser($userName, $ip) {
+function deleteOnlineUser($userName, $ip, $push = true) {
     $result = array();
     $newOnlineList = '';
 
@@ -159,5 +168,9 @@ function deleteOnlineUser($userName, $ip) {
     }
 
     Stroage::getInstance() -> set("online", $newOnlineList);
-    pushOnline();
+    
+    if($push) {
+        pushOnline();
+    }
+    
 }

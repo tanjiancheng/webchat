@@ -32,8 +32,17 @@ class OnlineAction {
 
 		while ($currentmodif <= $lastmodif) // check if the data file has been modified 
 		{ 
-			usleep(10000); 					// sleep 10ms to unload the CPU 
+			sleep(1); 					// sleep 1s to unload the CPU 
 			$currentmodif = Stroage::getInstance() -> get("onlineTime");
+
+			$onlineList = getOnlineList();
+
+			foreach($onlineList as $online) {
+				if(time() - $online['expire'] > EXPIRE) {
+	                deleteOnlineUser($online['userName'], $online['ip']);
+	            }
+	            break;
+			}
 		}
 
 		$response = array();
@@ -44,14 +53,17 @@ class OnlineAction {
 		flush();
 	}
 
-	public function deleteOnlineUser($parame = array()) {
-		/*session_start();
-		session_write_close();
-		unset($_SESSION);
-		*/
+	/*public function deleteOnlineUser($parame = array()) {
 		$userName = $parame['userName'];
 		$ip = $parame['ip'];
 		deleteOnlineUser($userName, $ip);
+		exit;
+	}*/
+
+
+	public function updateOnlineUser($parame = array()) {
+		updateOnlineList($parame,false);
+		echo json_encode("ok");
 		exit;
 	}
 

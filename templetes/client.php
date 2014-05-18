@@ -46,11 +46,11 @@
 						//ip == receive_ip ||
 						if( userName == data.userName) { 	 //我自己
 							picture =  "images/user/"+pic;
-							$("#me-picture").attr("src", picture);
+							$("#me-content-templete .me-picture").attr("src", picture);
 							templete = $("#me-content-templete").html();
 						} else {				 //其他人
 							picture =  "images/user/"+data.pic;
-							$("#other-picture").attr("src", picture);
+							$("#other-content-templete .other-picture").attr("src", picture);
 							templete = $("#other-content-templete").html();	
 						}
 
@@ -113,6 +113,31 @@
 			}
 
 
+			function keepOnline() {
+				var flag = true;
+
+				setInterval(function() {
+					if(flag) {
+						flag = false;
+						$.ajax({
+							url : 'index.php?func=OnlineAction.updateOnlineUser',
+							data : {
+								'ip' : ip,
+								'pic' : pic,
+								'userName' : userName
+							}, 
+							type : 'get', 
+							dataType : "json",
+							complete : function() {
+								flag = true;
+							}
+						})
+					}
+					
+				},10000)
+				
+			}
+
 
 			function scrollToBottom() {
 			   var scrollTop = $("#chat-content")[0].scrollHeight;
@@ -151,8 +176,7 @@
 				$("#online").html(onlineHtml);
 			}
 
-			var isClose = true;
-			function logout(){
+			/*function logout(){
 		        $.ajax({
 					url : 'index.php?func=OnlineAction.deleteOnlineUser',
 					data : {
@@ -163,40 +187,32 @@
 					type : 'get', 
 					dataType : "json"
 				})
-			}
+			}*/
 
-			$(window).on('beforeunload', function() {
-				if(isClose) {
+			/*$(window).on('beforeunload', function() {
+				if(!sessionStorage.getItem("is_reloaded")) {
 					logout();
 				}
-			});
+			});*/
 
 
-			function checkFirstVisit() {
-				var is_reloaded = sessionStorage.getItem("is_reloaded");
-				if(is_reloaded) {
-					isClose = false;
-					alert('Reloaded!')
-				} else {
-					sessionStorage.setItem("is_reloaded", true);
-				}
-			 
-			}
-
-
+			//回车
 			document.onkeydown = function(e){
 	            var ev = document.all ? window.event : e;
 	            if(ev.keyCode==13) {
 	                $("#submit").trigger('click');
 	                return false;
-	            } else if(ev.keyCode==116) {
+	            } 
+	            /*else if(ev.keyCode==116) {
+	            	sessionStorage.setItem("is_reloaded", true);
 	            	ev.keyCode=0;
 	            	ev.cancelBubble = true;   
 	            	ev.returnValue = false;
-	            }
+	            }*/
 
 	        }
 
+	        //禁止右键菜单
 	        document.oncontextmenu = function() {
 	        	return false;
 	        }
@@ -204,6 +220,7 @@
 			$(document).ready(function(){ 
 				connect();			
 				onlineConnect();
+				keepOnline();
 
 				$("#submit").click(function() {
 					var msg = $('#word').val();
@@ -218,12 +235,12 @@
 
 	</head>
 
-	<body class="body-blue" onload="checkFirstVisit()">
+	<body class="body-blue">
 		
 		<div id="container">
 			<div id="panelL">
 				<div id="header" style="position:relative;">
-					<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v1.50</h1>
+					<h1 style="position:absolute;bottom:0px;padding:0 10px">小成成聊天室v2.00</h1>
 				</div> 
 				<div id="chat-content">
 					<!-- <div class="other clearfix">
@@ -307,7 +324,7 @@
 		<div id="other-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic">
-					<img src="" alt="" id="other-picture" class="img">
+					<img src="" alt="" class="img other-picture">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table">
@@ -332,7 +349,7 @@
 		<div id="me-content-templete" style="display:none">
 			<div class="other clearfix">
 				<span class="other-pic me-pic">
-					<img src="" alt="" id="me-picture" class="img">
+					<img src="" alt="" class="img me-picture">
 					<em>%Name</em>
 				</span>
 				<table class="chat-table me-table">

@@ -18,6 +18,7 @@ if(!defined('BASE')){
 
 	$baseUrl = dirname('http://'.$domain .":" . $_SERVER['SERVER_PORT'] . $_SERVER['SCRIPT_NAME']) ;
 	define("APP", $baseUrl);        //设置当前应用的目录
+	define("EXPIRE", 15);			//在线用户过期时间
 
 
 	include('core.cls.php');

@@ -37,10 +37,6 @@ class ServerAction {
 			usleep(100000); 					// sleep 100ms to unload the CPU 
 			$currentmodif = Stroage::getInstance() -> get("time");
 
-			if (connection_aborted() == 1) {
-				deleteOnlineUser("ctam", "::1");
-				break;
-			}
 		}
 
 		$response = array();

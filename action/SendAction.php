@@ -17,10 +17,10 @@ class SendAction {
 	public function send($parame) {
 		$msg = $parame['msg']; 
 		Stroage::getInstance() -> set("msg", $msg);
-		Stroage::getInstance() -> set("time", time());
 		Stroage::getInstance() -> set("currentip", $parame['ip']);
 		Stroage::getInstance() -> set("pic", $parame['pic']);
 		Stroage::getInstance() -> set("userName", $parame['userName']);
+		Stroage::getInstance() -> set("time", time());
 		die();
 	}
 
